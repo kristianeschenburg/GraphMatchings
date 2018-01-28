@@ -1,5 +1,3 @@
 # StableMarriage
 
-Currently incomplete.
-
-Code to solve the Stable Marriage problem using the Gale-Shapley algorithm.  
+Implementation of Gale-Shapley algorithm to solve the Stable Marriage problem.
