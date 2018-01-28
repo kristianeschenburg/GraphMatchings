@@ -13,15 +13,16 @@ class GaleShapely(object):
     
     """
     Class to apply the Gale-Shapely algorithm to the Stable Marriage problem.
+    Assumes that it class will receive a list of N men, and N women, where
+    each man and each woman have ranked all members of the opposite sex, 
+    with rankings contained in NxN arrays.
     
     Parameters:
     - - - - -
-        men : list of men
-        
-        women : list of women
-        
-        male_pref : array of male preferences
-        fem_pref : array of female preferences
+        men : array of men
+        women : array of women
+        male_pref : array of male preferences (NxN)
+        fem_pref : array of female preferences (NxN)
         
     We assume that men and women are integer valued, starting from 0.
 
