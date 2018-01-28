@@ -1,1 +1,1 @@
-from GS import *
+from .GS import *

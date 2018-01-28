@@ -9,7 +9,7 @@ Created on Sat Jan 27 21:41:00 2018
 import Queue
 import numpy as np
 
-def GaleShapely(object):
+class GaleShapely(object):
     
     """
     Class to apply the Gale-Shapely algorithm to the Stable Marriage problem.
@@ -28,6 +28,8 @@ def GaleShapely(object):
     """
     
     def __init__(self,men,women,male_pref,fem_pref):
+        
+        Tests(men,women,male_pref,fem_pref)
 
         self.male_pref = male_pref
         self.fem_pref = fem_pref
@@ -36,51 +38,92 @@ def GaleShapely(object):
         for m in men:
             self.bachelors.put(m)
         
-        self.proposals = np.zeros((len(men),))
+        self.proposals = np.zeros((len(men),)).astype(np.int32)
         
-        self.male_spouses = np.zeros((len(men),))
-        self.male_spouses[:] = np.nan
-        
-        self.female_spouses = np.zeros((len(women),))
-        self.female_spouses[:] = np.nan
-        
+        # wives of husband m, and husbands of wife w
+        self.wife = {k: np.nan for k in men}
+        self.husband = {k: np.nan for k in women}
 
     def marry(self):
         
-        eligible = self.bachelors
-        proposals = self.proposals
-        
-        male_pref = self.male_pref
-        female_pref = self.fem_pref
-        
-        male_spouses = self.male_spouses
-        female_spouses = self.female_spouses
-        
-        while not eligible.empty():
-            
-            male = eligible.get()
-            pos_spouse = male_pref[proposals[male]]
-            
-            # if the current woman hasn't yet been proposed to
-            # pair this man and woman
-            if np.isnan(female_spouses[pos_spouse]):
-                
-                male_spouses[male] = pos_spouse
-                female_spouses[pos_spouse] = male
-                
-            # if this woman has been proposed to, set her spouse to the one
-            # who she prefers, and add the one she doesn't back into the list
-            # of eligible bachelors
-            else:
-                if female_pref[male] > female_pref[female_spouses[pos_spouse]]:
-                    
-                    eligible.put(female_spouses[pos_spouse])
-                    female_spouses[pos_spouse] = male
-            
-            proposals[male] += 1
-            
+        bachelors = self.bachelors
+
+        while not bachelors.empty():
+
+            male = bachelors.get()
+
+            self._propose(male)
+
         del self.bachelors
         del self.proposals
+
+
+    def _propose(self,suitor):
         
-        self.male_spouses = male_spouses
-        self.female_spouses = female_spouses
+        """
+        Proposal method for single suitor.  Keep proposing until no-longer
+        single, or until already proposed to all women.
+        """
+
+        engaged = False
+        count = self.proposals[suitor]
+        preferences = self.male_pref[suitor,:]
+        
+        while not engaged and count < len(preferences):
+            
+            partner = preferences[count]
+            
+            if np.isnan(self.husband[partner]):
+                self.wife[suitor] = partner
+                self.husband[partner] = suitor
+                engaged = True
+            else:
+                fiancee = self.husband[partner]
+                
+                if self.fem_pref[partner,suitor] < self.fem_pref[partner,fiancee]:
+                    self.bachelors.put(fiancee)
+                    self.wife[suitor] = partner
+                    self.husband[partner] =  suitor
+                    engaged = True
+            
+            count += 1
+        
+        self.proposals[suitor] = count
+                    
+class Tests(object):
+    
+    """
+    Tests to check that inputs to GaleShapley are correct.
+    """
+    
+    def __init__(self,men,women,male_preferences,female_preferences):
+
+        self._testDataType(men,women,male_preferences,female_preferences)
+        self._testMemberLength(men,women)
+        self._testMemberIdentity(men,women)
+        self._testPreferenceShape(male_preferences,female_preferences)
+        self._testPreferenceIdentity(male_preferences,female_preferences)
+        
+    def _testDataType(self,men,women,mp,fp):
+        
+        assert men.dtype == np.int32
+        assert women.dtype == np.int32
+        assert mp.dtype == np.int32
+        assert fp.dtype == np.int32
+        
+    def _testMemberLength(self,men,women):
+        
+        assert len(men) == len(women)
+    
+    def _testMemberIdentity(self,men,women):
+        
+        assert len(set(men).symmetric_difference(set(women))) == 0
+        
+    def _testPreferenceShape(self,mp,fp):
+
+        assert mp.shape == fp.shape
+    
+    def _testPreferenceIdentity(self,mp,fp):
+
+        assert np.all(np.unique(mp) == np.unique(fp))
+            
