@@ -32,27 +32,33 @@ def GaleShapely(object):
         self.male_pref = male_pref
         self.fem_pref = fem_pref
         
-        freeMen = Queue.Queue()
+        self.bachelors = Queue.Queue()
         for m in men:
-            freeMen.put(m)
+            self.bachelors.put(m)
         
-        proposals_made = np.zeros((len(men),))
+        self.proposals = np.zeros((len(men),))
         
-        male_engaged = np.zeros((len(men),))
-        male_engaged[:] = np.nan
+        self.male_spouses = np.zeros((len(men),))
+        self.male_spouses[:] = np.nan
         
-        fem_engaged = np.zeros((len(women),))
-        fem_engaged[:] = np.nan
+        self.female_spouses = np.zeros((len(women),))
+        self.female_spouses[:] = np.nan
         
+
+    def marry(self):
         
-    def marry(self,bachelors,proposals,male_spouses,female_spouses):
+        eligible = self.bachelors
+        proposals = self.proposals
         
         male_pref = self.male_pref
-        fem_pref = self.fem_pref
+        female_pref = self.fem_pref
         
-        while not bachelors.empty():
+        male_spouses = self.male_spouses
+        female_spouses = self.female_spouses
+        
+        while not eligible.empty():
             
-            male = bachelors.get()
+            male = eligible.get()
             pos_spouse = male_pref[proposals[male]]
             
             # if the current woman hasn't yet been proposed to
@@ -66,7 +72,15 @@ def GaleShapely(object):
             # who she prefers, and add the one she doesn't back into the list
             # of eligible bachelors
             else:
-                
-                if fem_pref[male] > fem_pref[female_spouses[pos_spouse]]:
+                if female_pref[male] > female_pref[female_spouses[pos_spouse]]:
                     
-                    
+                    eligible.put(female_spouses[pos_spouse])
+                    female_spouses[pos_spouse] = male
+            
+            proposals[male] += 1
+            
+        del self.bachelors
+        del self.proposals
+        
+        self.male_spouses = male_spouses
+        self.female_spouses = female_spouses
