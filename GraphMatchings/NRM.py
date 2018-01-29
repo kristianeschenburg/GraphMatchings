@@ -13,9 +13,9 @@ class ResidentMatching(object):
     
     """
     Class to implement a modified version of the Gale-Shapley algorithm for
-    a version of the Resident-Hospital Matching problem.  We assume each 
-    hospital has h_i spots, and has ranked each applicant from 1:R.  We 
-    assume that each resident has ranked all hospitals from 1:H.
+    National Resident Matching problem.  We assume each hospital has p_h 
+    positions available, and has ranked each applicant from 1:R.  We assume 
+    that each resident has ranked all hospitals from 1:H.
     
     Parameters:
     - - - - -
@@ -33,50 +33,67 @@ class ResidentMatching(object):
         self.residents = residents
         
         self.positions = positions
-        self.hosp_rank = hospital_rankings
-        self.resd_rank = resident_rankings
+        self.h_rank = hospital_rankings
+        self.r_rank = resident_rankings
         
-        self.hospOpen = Queue()
+        # initialize queue of hospitals
+        self.open_hospitals = Queue()
         for h in hospitals:
-            self.hospOpen.put(h)
+            self.open_hospitals.put(h)
             
+        # number of applicants each hospital has considered so far
         self.applied = np.empty((hospitals.shape)).astype(np.int32)
         
-        self.hosp_matched = {k: np.zeros((residents.shape)).astype(np.int32) for k in hospitals}
-        self.resd_matched = {k: np.nan for k in residents}
+        # current H-->R and R-->H matchings
+        self.h_matched = {k: np.zeros((residents.shape)).astype(np.int32) for k in hospitals}
+        self.r_matched = {k: np.nan for k in residents}
         
     def match(self):
         
-        hospOpen = self.hospOpen
+        """
+        NRM wrapper method.
+        """
+        
+        open_hospitals = self.open_hospitals
 
-        while not hospOpen.empty():
+        while not open_hospitals.empty():
 
-            hospital = hospOpen.get()
+            hospital = open_hospitals.get()
 
             self._application(hospital)
             
         [self.hosp_matched,self.unmatched] = self._matchLists()
 
-        del self.hospOpen
-        del self.hosp_rank
-        del self.resd_rank
+        del self.open_hospitals
+        del self.h_rank
+        del self.r_rank
         del self.applied
         
     def _application(self,hospital):
         
         """
-        Round of applications for a single hospital.
+        Matching method for a single hospital.  Consider applicants until all
+        available positions are filled, or until all residents have been 
+        considered.
+        
+        Parameters:
+        - - - - -
+            hospital : single hospital identifier
         """
         
-        applied = self.applied[hospital] # number of students considered already
-        enrolled = self.hosp_matched[hospital].sum()
-        rankings = self.hosp_rank[hospital,:] # hospital's rankings of students
-        positions = self.positions[hospital] # total positions available
+        # number of residents considered already
+        applied = self.applied[hospital]
+        # current number of matched residents
+        enrolled = self.h_matched[hospital].sum()
+        # hospital's ranking of students
+        rankings = self.h_rank[hospital,:]
+        # total number of positions available at hospital
+        positions = self.positions[hospital]
 
+        # while hospital has not yet considered all students AND while 
+        # current number of matched students is less than avail. positions
         while applied < len(rankings) and enrolled < positions:
-            
-            
-            
+
             # get next highest ranked student
             applicant = rankings[applied]
             
@@ -93,14 +110,16 @@ class ResidentMatching(object):
                 # current match
                 committed = self.resd_matched[applicant]
                 
-                if self.resd_rank[applicant,hospital] < self.resd_rank[applicant,committed]:
+                # if new proposed hospital is ranked higher by resident
+                # than current match
+                if self.r_rank[applicant,hospital] < self.r_rank[applicant,committed]:
 
-                    self.hospOpen.put(committed)
-                    self.resd_matched[applicant] = hospital
-                    self.hosp_matched[hospital][applicant] = 1
-                    self.hosp_matched[committed][applicant] = 0
+                    self.open_hospitals.put(committed)
+                    self.r_matched[applicant] = hospital
+                    self.h_matched[hospital][applicant] = 1
+                    self.h_matched[committed][applicant] = 0
                     enrolled += 1
-            
+
             applied += 1
 
         self.applied[hospital] = applied
@@ -108,7 +127,8 @@ class ResidentMatching(object):
     def _matchLists(self):
         
         """
-        Convert Hospital matchings to dictionaries.
+        Convert hospital matchings to dictionary structure and determine
+        which residents were not matched to a hospital.
         """
         
         matchings = {k: [] for k in self.hosp_matched.keys()}
