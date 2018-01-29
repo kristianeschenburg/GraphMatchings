@@ -5,6 +5,7 @@
 **NRM**  contains class to apply variant of the Gale-Shapley algorithm to the National Resident Matching problem.  In this problem, we are matching *H* hospitals to *R* medical residents, where each hospital also has a limited number of positions available.  Again, we optimize for the rankings of the left-hand-side of our graph, which in this case can be non-bipartite if each hospital has more than 1 position available.
 
 **In the works:**
+
  -- Ford-Fulkerson for Maximum Bipartite Matching
  -- Hungarian Method for Maximum-Weighted Bipartite Matching
  
