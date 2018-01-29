@@ -6,15 +6,15 @@ Created on Sat Jan 27 21:41:00 2018
 @author: kristianeschenburg
 """
 
-import Queue
+from Queue import Queue
 import numpy as np
 
 class GaleShapely(object):
     
     """
-    Class to apply the Gale-Shapely algorithm to the Stable Marriage problem.
-    Assumes that it class will receive a list of N men, and N women, where
-    each man and each woman have ranked all members of the opposite sex, 
+    Class to apply the Classic Gale-Shapely algorithm to the Stable Marriage 
+    problem.  Assumes that it class will receive a list of N men, and N women, 
+    where each man and each woman have ranked all members of the opposite sex, 
     with rankings contained in NxN arrays.
     
     Parameters:
@@ -35,7 +35,7 @@ class GaleShapely(object):
         self.male_pref = male_pref
         self.fem_pref = fem_pref
         
-        self.bachelors = Queue.Queue()
+        self.bachelors = Queue()
         for m in men:
             self.bachelors.put(m)
         

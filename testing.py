@@ -8,18 +8,22 @@ Created on Sun Jan 28 12:29:35 2018
 
 import numpy as np
 
-m = np.arange(10).astype(np.int32)
-w = np.arange(10).astype(np.int32)
+h = np.arange(5).astype(np.int32)
+r = np.arange(15).astype(np.int32)
 
-mp = np.zeros((10,10)).astype(np.int32)
-wp = np.zeros((10,10)).astype(np.int32)
+hr = np.zeros((5,15)).astype(np.int32)
+rr = np.zeros((15,5)).astype(np.int32)
 
-for h in np.arange(10):
-    wp[h,:] = np.random.choice(10,size=(10,),replace=False).astype(np.int32)
-    mp[h,:] = np.random.choice(10,size=(10,),replace=False).astype(np.int32) 
+for hp in np.arange(5):
+    hr[hp,:] = np.random.choice(15,size=(15,),replace=False).astype(np.int32)
+
+for rp in np.arange(15):   
+    rr[rp,:] = np.random.choice(5,size=(5,),replace=False).astype(np.int32) 
+    
+positions = np.asarray([3,2,1,2,1])
 
 
 import StableMarriage as sm 
     
-G = sm.GaleShapely(m,w,mp,wp)
-G.marry()
+G = sm.ResidentMatching(h,r,positions,hr,rr)
+G.match()
