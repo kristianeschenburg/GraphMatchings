@@ -62,7 +62,7 @@ class ResidentMatching(object):
 
             self._application(hospital)
             
-        [self.hosp_matched,self.unmatched] = self._matchLists()
+        [self.h_matched,self.unmatched] = self._matchLists()
 
         del self.open_hospitals
         del self.h_rank
@@ -98,9 +98,9 @@ class ResidentMatching(object):
             applicant = rankings[applied]
             
             # if this resident is currently unmatched, match them
-            if np.isnan(self.resd_matched[applicant]):
-                self.hosp_matched[hospital][applicant] = 1
-                self.resd_matched[applicant] = hospital
+            if np.isnan(self.r_matched[applicant]):
+                self.h_matched[hospital][applicant] = 1
+                self.r_matched[applicant] = hospital
                 enrolled += 1
                 
             # otherwise, compare resident's preference of their current match
@@ -108,7 +108,7 @@ class ResidentMatching(object):
             else:
                 
                 # current match
-                committed = self.resd_matched[applicant]
+                committed = self.r_matched[applicant]
                 
                 # if new proposed hospital is ranked higher by resident
                 # than current match
@@ -131,12 +131,12 @@ class ResidentMatching(object):
         which residents were not matched to a hospital.
         """
         
-        matchings = {k: [] for k in self.hosp_matched.keys()}
+        matchings = {k: [] for k in self.h_matched.keys()}
         
         matched_residents = set()
         
         for k in matchings:
-            residents = list(np.nonzero(self.hosp_matched[k])[0])
+            residents = list(np.nonzero(self.h_matched[k])[0])
             matchings[k] = residents
             matched_residents.update(residents)
         

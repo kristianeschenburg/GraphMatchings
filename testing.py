@@ -23,7 +23,7 @@ for rp in np.arange(15):
 positions = np.asarray([3,2,1,2,1])
 
 
-import StableMarriage as sm 
+import GraphMatchings as gm 
     
-G = sm.ResidentMatching(h,r,positions,hr,rr)
+G = gm.ResidentMatching(h,r,positions,hr,rr)
 G.match()
