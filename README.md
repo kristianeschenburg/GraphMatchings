@@ -6,8 +6,8 @@
 
 **In the works:**
 
- -- Ford-Fulkerson for Maximum Bipartite Matching
+ -- **Ford-Fulkerson** for Maximum Bipartite Matching
  
- -- Hungarian Method for Maximum-Weighted Bipartite Matching
+ -- **Hungarian Method** for Maximum-Weighted Bipartite Matching
  
 I regularly use the **scipy.optimize.linear_sum_assignment** method for the purpose of cortical parcellation label matchings, where the cost matrix is defined by various metrics.  While I could theoretically use my own future implementation to do this, I don't think that my code will be as efficient as the **scipy** version.  This repository will probably only be used for learning purposes.
