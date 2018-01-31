@@ -105,7 +105,7 @@ class GaleShapleyTestCases(unittest.TestCase):
     def test_ties(self):
         
         """
-        Test a case where two men most prefer the same woman.
+        Test a case where men prefer the same woman.
         """
         
         m = np.asarray([0,1,2])
@@ -157,7 +157,7 @@ class GaleShapleyTestCases(unittest.TestCase):
         w = np.asarray([0,1,2])
         
         mp = np.asarray([[1,0],[1,0]])
-        wp = np.asarray([[1,0],[1,0]])
+        wp = np.asarray([[0,1],[0,1]])
         
         m2 = np.asarray([0,1])
         w2 = np.asarray([1,2])
