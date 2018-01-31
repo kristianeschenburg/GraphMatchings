@@ -30,7 +30,7 @@ class GaleShapely(object):
     
     def __init__(self,men,women,male_pref,fem_pref):
         
-        Tests(men,women,male_pref,fem_pref)
+        DataChecks(men,women,male_pref,fem_pref)
 
         self.male_pref = male_pref
         self.fem_pref = fem_pref
@@ -52,6 +52,7 @@ class GaleShapely(object):
         while not bachelors.empty():
 
             male = bachelors.get()
+            print 'Current male: {}'.format(male)
 
             self._propose(male)
 
@@ -73,8 +74,10 @@ class GaleShapely(object):
         while not engaged and count < len(preferences):
             
             partner = preferences[count]
+            print 'Current love: {}'.format(partner)
             
             if np.isnan(self.husband[partner]):
+                print 'Partner {} not yet engaged'.format(partner)
                 self.wife[suitor] = partner
                 self.husband[partner] = suitor
                 engaged = True
@@ -82,16 +85,21 @@ class GaleShapely(object):
                 fiancee = self.husband[partner]
                 
                 if self.fem_pref[partner,suitor] < self.fem_pref[partner,fiancee]:
+                    
+                    print 'Partner {} perfers {} to her current partner {}'.format(partner,suitor,fiancee)
                     self.bachelors.put(fiancee)
                     self.wife[suitor] = partner
                     self.husband[partner] =  suitor
                     engaged = True
+                else:
+                    print 'Partner {} perfers {} to her current suitor {}'.format(partner,fiancee,suitor)
+
             
             count += 1
         
         self.proposals[suitor] = count
                     
-class Tests(object):
+class DataChecks(object):
     
     """
     Tests to check that inputs to GaleShapley are correct.
