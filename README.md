@@ -6,9 +6,9 @@
 
 **In the works:**
 
- -- **Ford-Fulkerson** for Maximum Flow (but for my purposes, Maximum Bipartite Matching)
+ -- **Ford-Fulkerson** for Maximum Flow
  
- -- **Edmonds-Karp** for Maximum Flow (again, for Maximum Bipartite Matching) -- the distinction between Ford-Fulkerson and Edmonds-Karp being that Edmonds-Karp is actually an algorithm in that it specifies *how* (via Breadth First Search) to find augmenting paths, while the means of finding augmenting paths in Ford-Fulkerson is left unspecified -- so Ford-Fulkerson is technically a *method*... simply a way to compute the maximum flow of a network, where that way is arbitrary, and the Edmonds-Karp algorithm is a special instance of the Ford-Fulkerson method.
+ -- **Edmonds-Karp** for Maximum Flow -- the distinction between Ford-Fulkerson and Edmonds-Karp being that Edmonds-Karp is actually an algorithm in that it specifies *how* (via Breadth First Search) to find augmenting paths, while the means of finding augmenting paths in Ford-Fulkerson is left unspecified -- so, the Edmonds-Karp algorithm is a special instance of the Ford-Fulkerson method.
  
  -- **Hungarian Method** for Maximum-Weighted Bipartite Matching
  
