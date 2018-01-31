@@ -6,10 +6,10 @@
 
 **In the works:**
 
- -- **Ford-Fulkerson** for Maximum Flow
+ -- **Ford-Fulkerson**
  
- -- **Edmonds-Karp** for Maximum Flow -- the distinction between Ford-Fulkerson and Edmonds-Karp being that Edmonds-Karp is actually an algorithm in that it specifies *how* (via Breadth First Search) to find augmenting paths, while the means of finding augmenting paths in Ford-Fulkerson is left unspecified -- so, the Edmonds-Karp algorithm is a special instance of the Ford-Fulkerson method.
+ -- **Edmonds-Karp** -- the distinction between Ford-Fulkerson and Edmonds-Karp being that Edmonds-Karp is actually an algorithm in that it specifies *how* (via Breadth First Search) to find augmenting paths, while the means of finding augmenting paths in Ford-Fulkerson is left unspecified -- so, the Edmonds-Karp algorithm is a special instance of the Ford-Fulkerson method.
  
- -- **Hungarian Method** for Maximum-Weighted Bipartite Matching
+ -- **Hungarian Method**
  
 I regularly use the **scipy.optimize.linear_sum_assignment** method for the purpose of cortical parcellation label matchings, where the cost matrix is defined by some measure of similarity.  While I could theoretically use my own future implementation to do this, I doubt  that my code will be as efficient as the scipy version.  This repository will probably only be used for learning purposes.
