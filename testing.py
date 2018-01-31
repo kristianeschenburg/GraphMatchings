@@ -24,11 +24,13 @@ for rp in np.arange(15):
 positions = np.asarray([3,2,1,2,1])
 """
 
-m = np.asarray([1,0]).astype(np.int32)
+m = np.asarray([0,1]).astype(np.int32)
 w = np.asarray([0,1]).astype(np.int32)
 
-mp = np.asarray([[0,1],[1,0]]).astype(np.int32)
-wp = np.asarray([[0,1],[1,0]]).astype(np.int32)
+mp = np.asarray([[0,1],
+                 [1,0]]).astype(np.int32)
+wp = np.asarray([[0,1],
+                 [1,0]]).astype(np.int32)
 
 import GraphMatchings as gm 
     

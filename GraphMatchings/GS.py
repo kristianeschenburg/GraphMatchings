@@ -30,10 +30,17 @@ class GaleShapley(object):
     
     def __init__(self,men,women,male_pref,fem_pref):
         
+        # Check data types, and check tests
+        men = men.astype(np.int32)
+        women = women.astype(np.int32)
+        male_pref = male_pref.astype(np.int32)
+        fem_pref = fem_pref.astype(np.int32)
+        
         DataChecks(men,women,male_pref,fem_pref)
 
+        # initialize attributes
         self.male_pref = male_pref
-        self.fem_pref = fem_pref
+        self.fem_pref =  fem_pref
         
         self.bachelors = Queue()
         for m in men:
@@ -99,32 +106,36 @@ class DataChecks(object):
     
     def __init__(self,men,women,male_preferences,female_preferences):
 
-        self._testDataType(men,women,male_preferences,female_preferences)
         self._testMemberLength(men,women)
         self._testMemberIdentity(men,women)
         self._testPreferenceShape(male_preferences,female_preferences)
         self._testPreferenceIdentity(male_preferences,female_preferences)
-        
-    def _testDataType(self,men,women,mp,fp):
-        
-        assert men.dtype == np.int32
-        assert women.dtype == np.int32
-        assert mp.dtype == np.int32
-        assert fp.dtype == np.int32
-        
+
     def _testMemberLength(self,men,women):
         
-        assert len(men) == len(women)
+        try:
+            len(men) == len(women)
+        except:
+            raise AssertionError
     
     def _testMemberIdentity(self,men,women):
         
-        assert len(set(men).symmetric_difference(set(women))) == 0
-        
+        try:
+            len(set(men).symmetric_difference(set(women))) == 0
+        except:
+            raise AssertionError
+    
     def _testPreferenceShape(self,mp,fp):
 
-        assert mp.shape == fp.shape
+        try:
+            mp.shape == fp.shape
+        except:
+            raise AssertionError
     
     def _testPreferenceIdentity(self,mp,fp):
 
-        assert np.all(np.unique(mp) == np.unique(fp))
+        try:
+            np.all(np.unique(mp) == np.unique(fp))
+        except:
+            raise AssertionError
             

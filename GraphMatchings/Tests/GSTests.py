@@ -34,13 +34,13 @@ class GaleShapleyTestCases(unittest.TestCase):
         A simple 2x2 case, where men's preferences are the same as the women's.
         """
 
-        m = np.asarray([0,1]).astype(np.int32)
-        w = np.asarray([0,1]).astype(np.int32)
+        m = np.asarray([0,1])
+        w = np.asarray([0,1])
         
         mp = np.asarray([[0,1],
-                         [1,0]]).astype(np.int32)
+                         [1,0]])
         wp = np.asarray([[0,1],
-                         [1,0]]).astype(np.int32)
+                         [1,0]])
 
         G = GS.GaleShapley(m,w,mp,wp)
         G.marry()
@@ -49,6 +49,7 @@ class GaleShapleyTestCases(unittest.TestCase):
                     1:1}
         
         self.assertTrue(G.husband == expected)
+        self.assertTrue(G.wife == expected)
         
     def test_simple_reordered(self):
         
@@ -56,13 +57,13 @@ class GaleShapleyTestCases(unittest.TestCase):
         A simple 2x2 case, where men's preferences are the same as the women's.
         """
 
-        m = np.asarray([1,0]).astype(np.int32)
-        w = np.asarray([0,1]).astype(np.int32)
+        m = np.asarray([1,0])
+        w = np.asarray([0,1])
         
         mp = np.asarray([[0,1],
-                         [1,0]]).astype(np.int32)
+                         [1,0]])
         wp = np.asarray([[0,1],
-                         [1,0]]).astype(np.int32)
+                         [1,0]])
 
         G = GS.GaleShapley(m,w,mp,wp)
         G.marry()
@@ -71,6 +72,7 @@ class GaleShapleyTestCases(unittest.TestCase):
                     1:1}
         
         self.assertTrue(G.husband == expected)
+        self.assertTrue(G.wife == expected)
         
     def test_shifts(self):
         
@@ -78,18 +80,18 @@ class GaleShapleyTestCases(unittest.TestCase):
         Test shifted case, where men each prefer the next in line.
         """
         
-        m = np.asarray([0,1,2,3]).astype(np.int32)
-        w = np.asarray([0,1,2,3]).astype(np.int32)
+        m = np.asarray([0,1,2,3])
+        w = np.asarray([0,1,2,3])
         
         mp = np.asarray([[0,1,2,3],
                          [1,2,3,0],
                          [2,3,0,1],
-                         [3,0,1,2]]).astype(np.int32)
+                         [3,0,1,2]])
     
         wp = np.asarray([[0,1,2,3],
                          [0,1,2,3],
                          [0,1,2,3],
-                         [0,1,2,3]]).astype(np.int32)
+                         [0,1,2,3]])
     
         G = GS.GaleShapley(m,w,mp,wp)
         G.marry()
@@ -100,22 +102,22 @@ class GaleShapleyTestCases(unittest.TestCase):
         self.assertTrue(G.husband == husbands)
         self.assertTrue(G.wife == wives)
         
-    def test_tie_men(self):
+    def test_ties(self):
         
         """
         Test a case where two men most prefer the same woman.
         """
         
-        m = np.asarray([0,1,2]).astype(np.int32)
-        w = np.asarray([0,1,2]).astype(np.int32)
+        m = np.asarray([0,1,2])
+        w = np.asarray([0,1,2])
         
         mp = np.asarray([[0,1,2],
                          [0,1,2],
-                         [0,1,2]]).astype(np.int32)
+                         [0,1,2]])
     
         wp = np.asarray([[0,1,2],
                          [0,1,2],
-                         [0,1,2]]).astype(np.int32)
+                         [0,1,2]])
     
         G = GS.GaleShapley(m,w,mp,wp)
         G.marry()
@@ -125,6 +127,44 @@ class GaleShapleyTestCases(unittest.TestCase):
         
         self.assertTrue(G.husband == husbands)
         self.assertTrue(G.wife == wives)
+        
+    def test_misalignments(self):
+        
+        """
+        Test misalignments -- when preference matches do not exist.
+        """
+        
+        m = np.asarray([0,1])
+        w = np.asarray([0,1])
+        
+        mp = np.asarray([[1,0],[1,0]])
+        wp = np.asarray([[1,0],[1,0]])
+        
+        G = GS.GaleShapley(m,w,mp,wp)
+        G.marry()
+        
+        expected = {0:0,1:1}
+        
+        self.assertTrue(G.husband == expected)
+        
+    def test_sex_size(self):
+        
+        """
+        Test whether male/female arrays are the matching sizes.
+        """
+        
+        m = np.asarray([0,1])
+        w = np.asarray([0,1,2])
+        
+        mp = np.asarray([[1,0],[1,0]])
+        wp = np.asarray([[1,0],[1,0]])
+        
+        m2 = np.asarray([0,1])
+        w2 = np.asarray([1,2])
+
+        self.assertRaises(GS.GaleShapley(m,w,mp,wp))
+        self.assertRaises(GS.GaleShapley(w,m,mp,wp))
+        self.assertRaises(GS.GaleShapley(m2,w2,mp,wp))
 
 if __name__ == '__main__':
 
