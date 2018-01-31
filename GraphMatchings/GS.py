@@ -9,10 +9,10 @@ Created on Sat Jan 27 21:41:00 2018
 from Queue import Queue
 import numpy as np
 
-class GaleShapely(object):
+class GaleShapley(object):
     
     """
-    Class to apply the Classic Gale-Shapely algorithm to the Stable Marriage 
+    Class to apply the Gale-Shapley algorithm to the Stable Marriage 
     problem.  Assumes that it class will receive a list of N men, and N women, 
     where each man and each woman have ranked all members of the opposite sex, 
     with rankings contained in NxN arrays.
@@ -52,8 +52,6 @@ class GaleShapely(object):
         while not bachelors.empty():
 
             male = bachelors.get()
-            print 'Current male: {}'.format(male)
-
             self._propose(male)
 
         del self.bachelors
@@ -74,10 +72,8 @@ class GaleShapely(object):
         while not engaged and count < len(preferences):
             
             partner = preferences[count]
-            print 'Current love: {}'.format(partner)
             
             if np.isnan(self.husband[partner]):
-                print 'Partner {} not yet engaged'.format(partner)
                 self.wife[suitor] = partner
                 self.husband[partner] = suitor
                 engaged = True
@@ -86,15 +82,11 @@ class GaleShapely(object):
                 
                 if self.fem_pref[partner,suitor] < self.fem_pref[partner,fiancee]:
                     
-                    print 'Partner {} perfers {} to her current partner {}'.format(partner,suitor,fiancee)
                     self.bachelors.put(fiancee)
                     self.wife[suitor] = partner
                     self.husband[partner] =  suitor
                     engaged = True
-                else:
-                    print 'Partner {} perfers {} to her current suitor {}'.format(partner,fiancee,suitor)
 
-            
             count += 1
         
         self.proposals[suitor] = count
