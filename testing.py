@@ -32,10 +32,21 @@ mp = np.asarray([[0,1],
 wp = np.asarray([[0,1],
                  [1,0]]).astype(np.int32)
 
-import GraphMatchings as gm 
+import Graphs as gm 
     
 #G = gm.ResidentMatching(h,r,positions,hr,rr)
 #G.match()
 
-G = gm.GaleShapely(m,w,mp,wp)
-G.marry()
+#G = gm.GaleShapely(m,w,mp,wp)
+#G.marry()
+
+H = np.asarray([[0,1,0,0,1,0,0,0],[0,0,1,0,0,0,1,0],[0,0,0,1,0,0,0,0],
+                [0,0,0,0,0,0,0,1],[0,0,0,0,0,1,0,0],[0,0,0,0,0,0,1,0],
+                [0,0,0,0,0,0,0,1],[0,0,0,0,0,0,0,0]])
+C = np.asarray([[0,10,0,0,10,0,0,0],[0,0,10,0,0,0,1,0],[0,0,0,10,0,0,0,0],
+                [0,0,0,0,0,0,0,10],[0,0,0,0,0,10,0,0],[0,0,0,0,0,0,10,0],
+                [0,0,0,0,0,0,0,10],[0,0,0,0,0,0,0,0]])
+    
+G = gm.EdmondsKarp(C,H,source=1)
+G.edmondskarp()
+print 'Max flow: {}'.format(G.maxFlow)

@@ -56,16 +56,16 @@ class EdmondsKarp(object):
         Wrapper method to run Edmonds-Karp algorithm.
         """
 
-        path = traversal.bfs(self.flow*self.graph,self.s,self.t)
+        path = traversal.bfs(self.flow,self.s,self.t)
 
         while len(path) > 0:
-            
+
             minFlow = self.pathCapacity(self.flow,path)
-            
+
             self.flow = self.updateResiduals(self.flow,path,minFlow)
             
             self.maxFlow += minFlow
-            path = traversal.bfs(self.flow*self.graph,self.s,self.t)
+            path = traversal.bfs(self.flow,self.s,self.t)
 
     def pathCapacity(self,graph,path):
         
