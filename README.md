@@ -10,7 +10,7 @@ So far, contains classes and methods for:
 
 -- **Gale-Shapley** (GS.py): In this problem, we match *N* men to *N* women, optimizing for male preferences (technically, we optimize for preferences of the left-hand-side of our bipartite graph -- the male-female categorization is a historical artifact), such that, at completion, each man is matched to one woman, and each woman to one man, with no two or more men or women mapping to the same parter.
 
--- **National Resident Matching** (NM.py): Cariant of Gale-Shapley algorithm, viewed from the perspective of matching hospitals to residents.  We are matching *H* hospitals to *R* medical residents, where each hospital also has a limited number of positions, $p_{h}$, available to be filled.  We optimize for the rankings of the left-hand-side of our bipartite graph, meaning that hospitals will fare better than residents.
+-- **National Resident Matching** (NM.py): Cariant of Gale-Shapley algorithm, viewed from the perspective of matching hospitals to residents.  We are matching *H* hospitals to *R* medical residents, where each hospital also has a limited number of positions, $$p_h$$, available to be filled.  We optimize for the rankings of the left-hand-side of our bipartite graph, meaning that hospitals will fare better than residents.
  
  To implement:
  
