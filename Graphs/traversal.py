@@ -12,7 +12,7 @@ import numpy as np
 def bfs(graph,s,t):
     
     """
-    Breadth first search from source vertex s to target vertex t.  Returns the
+    Breadth First Search from source vertex s to target vertex t.  Returns the
     final path.  If there is no path, list will be empty.
     
     Parameters:
