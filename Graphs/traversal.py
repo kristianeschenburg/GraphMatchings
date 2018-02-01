@@ -55,17 +55,22 @@ def path(parents,t):
     
     """
     Build path from source to target.
-    """
     
-    rev_path = []
-    rev_path.append(t)
+    Parameters:
+    - - - - -
+        parents : array, where each index [i] points to the parent node of
+                    node i
+        t : node from which to traverse backwards
+    """
+    path_stack = []
+    path_stack.append(t)
     
     while parents[t] != -1:
-        rev_path.append(parents[t])
+        path_stack.append(parents[t])
         t = parents[t]
 
     path = []
-    while len(rev_path) != 0:
-        path.append(rev_path.pop())
+    while len(path_stack) != 0:
+        path.append(path_stack.pop())
         
     return path
