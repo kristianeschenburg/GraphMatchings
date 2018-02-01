@@ -51,12 +51,15 @@ class EdmondsKarp(object):
         self.maxFlow = 0
         
     def edmondskarp(self):
+        
+        """
+        Wrapper method to run Edmonds-Karp algorithm.
+        """
 
         path = traversal.bfs(self.flow*self.graph,self.s,self.t)
 
         while len(path) > 0:
             
-            print 'Current Path: {}'.format(path)
             minFlow = self.pathCapacity(self.flow,path)
             
             self.flow = self.updateResiduals(self.flow,path,minFlow)
@@ -67,7 +70,13 @@ class EdmondsKarp(object):
     def pathCapacity(self,graph,path):
         
         """
-        Compute the minimum weighted edge in a breadth first search path.
+        Compute the minimum flow capacity in the augmenting path.
+        
+        Parameters:
+        - - - - -
+            graph : residual on which augmenting path was computed, with edges 
+                    weighted by current forward or reverse flow
+            path : augmenting path from source to target node
         """
         
         minFlow = float('inf')
@@ -80,7 +89,14 @@ class EdmondsKarp(object):
     def updateResiduals(self,flow,path,minFlow):
         
         """
-        Update the residual edges of the flow matrix.
+        Update the residual edges of the flow matrix using the minimum flow
+        value of the computed augmenting path.
+        
+        Parameters:
+        - - - - -
+            flow : current residual graph
+            path : augmenting path
+            minFlow : minimum flow capacity of augmenting path
         """
         
         for p in np.arange(len(path)-1):
