@@ -1,4 +1,6 @@
-# GraphMatchings
+# Graphs
+
+Written originally with the intention to implement various graph mathching methods, but has grown into implementing various other graph algorithms and data structures.
 
 **GS** contains class to apply Gale-Shapley to the Stable Marriage problem.  In this problem, we match *N* men to *N* women, optimizing for male preferences (technically, we optimize for preferences of the left-hand-side of our bipartite graph -- the male-female categorization is a historical artifact), such that, at completion, each man is matched to one woman, and each woman to one man, with no two or more men or women mapping to the same parter.
 
