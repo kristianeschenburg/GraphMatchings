@@ -6,7 +6,7 @@ So far, contains classes and methods for:
 
 -- **Breadth First Search** (bfs.py)
 
--- **Edmonds-Karp**: algorithm for finding the maximum flow of a directed network by computing augmenting paths using Breadth First Search.
+-- **Edmonds-Karp** (EdmondsKarp.py): algorithm for finding the maximum flow of a directed network by computing augmenting paths using Breadth First Search.
 
 -- **Gale-Shapley** (GS.py): In this problem, we match *N* men to *N* women, optimizing for male preferences (technically, we optimize for preferences of the left-hand-side of our bipartite graph -- the male-female categorization is a historical artifact), such that, at completion, each man is matched to one woman, and each woman to one man, with no two or more men or women mapping to the same parter.
 
