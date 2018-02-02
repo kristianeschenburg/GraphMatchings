@@ -72,8 +72,9 @@ class EdmondsKarp(object):
         
         Parameters:
         - - - - -
-            graph : residual on which augmenting path was computed, with edges 
-                    weighted by current forward or reverse flow
+            flowGraph : residual on which augmenting path was computed, 
+                        with edges weighted by current forward or reverse 
+                        flow
             path : augmenting path from source to target node
         """
         
