@@ -50,3 +50,12 @@ C = np.asarray([[0,10,0,0,10,0,0,0],[0,0,10,0,0,0,1,0],[0,0,0,10,0,0,0,0],
 G = gm.EdmondsKarp(C,H)
 G.edmondskarp()
 print 'Max flow: {}'.format(G.maxFlow)
+
+H = np.zeros((6,6))
+H[0:3,0:3] = 1
+H[3:6,3:6] = 1
+
+[nc,components] = gm.connected_components(H)
+print '# Components = : {}'.format(nc)
+print components
+

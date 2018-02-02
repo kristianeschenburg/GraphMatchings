@@ -9,7 +9,7 @@ Created on Wed Jan 31 17:20:04 2018
 from Queue import Queue
 import numpy as np
 
-def bfs(graph,s,t):
+def bfs(graph,source = None,target = None):
     
     """
     Breadth First Search from source vertex s to target vertex t.  Returns the
@@ -19,15 +19,22 @@ def bfs(graph,s,t):
     - - - - -
         graph : directed adjacency matrix, where rows are source nodes of
                 an edge, and columns are target nodes of an edge
-        s : source node from which to search for a path
-        t : target node to which to search for path
+        source : source node from which to search for a path
+        target : target node to which to search for path
+        
+    If source is not provided, source vertex will be initialized as the
+    first vertex in the graph.  If target is not specified, the entire graph
+    might potentially be traversed.
     """
     
+    if not source:
+        source = 0
+
     visited = np.zeros((graph.shape[0],)).astype(np.int32)
     parent = -1 * np.ones((graph.shape[0],)).astype(np.int32)
     
     Q = Queue()
-    Q.put(s)
+    Q.put(source)
 
     while not Q.empty():
         
@@ -38,7 +45,7 @@ def bfs(graph,s,t):
                 
                 parent[n] = vertex
                 
-                if n == t:
+                if n == target:
                     
                     return parent,visited
 
