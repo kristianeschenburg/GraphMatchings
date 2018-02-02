@@ -6,7 +6,6 @@ Created on Wed Jan 31 20:15:08 2018
 @author: kristianeschenburg
 """
 
-import copy
 import traversal
 import numpy as np
 
@@ -35,7 +34,6 @@ class EdmondsKarp(object):
     def __init__(self,capacity,graph,source=None,target=None):
         
         self.capacity = capacity
-        self.flow = copy.deepcopy(capacity)
         self.graph = graph
         
         if not source:
@@ -56,18 +54,18 @@ class EdmondsKarp(object):
         Wrapper method to run Edmonds-Karp algorithm.
         """
 
-        path = traversal.bfs(self.flow,self.s,self.t)
+        path = traversal.bfs(self.capacity,self.s,self.t)
 
         while len(path) > 0:
 
-            minFlow = self.pathCapacity(self.flow,path)
+            minFlow = self.pathCapacity(self.capacity,path)
 
-            self.flow = self.updateResiduals(self.flow,path,minFlow)
+            self.flow = self.updateResiduals(self.capacity,path,minFlow)
             
             self.maxFlow += minFlow
-            path = traversal.bfs(self.flow,self.s,self.t)
+            path = traversal.bfs(self.capacity,self.s,self.t)
 
-    def pathCapacity(self,graph,path):
+    def pathCapacity(self,flowGraph,path):
         
         """
         Compute the minimum flow capacity in the augmenting path.
@@ -81,12 +79,12 @@ class EdmondsKarp(object):
         
         minFlow = float('inf')
         
-        for i in np.arange(len(path)-1):
-            minFlow = min(minFlow,graph[path[i],path[i+1]])
+        for p in np.arange(len(path)-1):
+            minFlow = min(minFlow,flowGraph[path[p],path[p+1]])
         
         return minFlow
     
-    def updateResiduals(self,flow,path,minFlow):
+    def updateResiduals(self,flowGraph,path,minFlow):
         
         """
         Update the residual edges of the flow matrix using the minimum flow
@@ -94,13 +92,13 @@ class EdmondsKarp(object):
         
         Parameters:
         - - - - -
-            flow : current residual graph
+            flowGraph : current residual graph
             path : augmenting path
             minFlow : minimum flow capacity of augmenting path
         """
         
         for p in np.arange(len(path)-1):
-            flow[path[p],path[p+1]] = flow[path[p],path[p+1]] - minFlow
-            flow[path[p+1],path[p]] = flow[path[p+1],path[p]] + minFlow
+            flowGraph[path[p],path[p+1]] -= minFlow
+            flowGraph[path[p+1],path[p]] += minFlow
         
-        return flow
+        return flowGraph
