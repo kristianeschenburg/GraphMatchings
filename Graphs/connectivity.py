@@ -32,6 +32,10 @@ def connected_components(graph):
     Parameters:
     - - - - -
         graph : adjacency matrix of graph
+        
+    While there is a vertex that is not assigned to a component, run bread 
+    first search, starting from one of the unassigned vertices.  For each 
+    traversal, assign all visited vertices to the same component.
     """
     
     nodes = graph.shape[0]
