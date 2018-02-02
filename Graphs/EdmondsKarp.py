@@ -54,9 +54,6 @@ class EdmondsKarp(object):
         Wrapper method to run Edmonds-Karp algorithm.
         """
         
-        print 'Source: {}'.format(self.s)
-        print 'Target: {}'.format(self.t)
-
         [parent,visited] = traversal.bfs(self.capacity,self.s,self.t)
 
         while parent[self.t] != -1:
