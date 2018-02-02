@@ -47,6 +47,9 @@ C = np.asarray([[0,10,0,0,10,0,0,0],[0,0,10,0,0,0,1,0],[0,0,0,10,0,0,0,0],
                 [0,0,0,0,0,0,0,10],[0,0,0,0,0,10,0,0],[0,0,0,0,0,0,10,0],
                 [0,0,0,0,0,0,0,10],[0,0,0,0,0,0,0,0]])
     
-G = gm.EdmondsKarp(C,H,source=1)
+print C.shape
+print H.shape
+    
+G = gm.EdmondsKarp(C,H)
 G.edmondskarp()
 print 'Max flow: {}'.format(G.maxFlow)

@@ -24,13 +24,10 @@ def bfs(graph,s,t):
     """
     
     visited = np.zeros((graph.shape[0],)).astype(np.int32)
-    parent = np.zeros((graph.shape[0],)).astype(np.int32)
-    parent[s] = -1
+    parent = -1 * np.ones((graph.shape[0],)).astype(np.int32)
     
     Q = Queue()
     Q.put(s)
-
-    bfs_path = []
 
     while not Q.empty():
         
@@ -42,14 +39,14 @@ def bfs(graph,s,t):
                 parent[n] = vertex
                 
                 if n == t:
+                    
+                    return parent,visited
 
-                    return path(parent,t)
-                
                 Q.put(n)
 
         visited[vertex] = 1
     
-    return bfs_path
+    return parent,visited
 
 def path(parents,t):
     
