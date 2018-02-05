@@ -12,7 +12,7 @@ import numpy as np
 def is_connected(graph):
     
     """
-    Determine whether the graph is connected or not.
+    Determine if graph is connected.
     
     Parameters:
     - - - - -
@@ -37,6 +37,11 @@ def connected_components(graph):
     first search, starting from one of the unassigned vertices.  For each 
     traversal, assign all visited vertices to the same component.
     """
+    
+    try:
+        [x,y] = graph.shape
+    except:
+        raise ValueError
     
     nodes = graph.shape[0]
     components = -1*np.ones((nodes,))

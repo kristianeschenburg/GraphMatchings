@@ -13,7 +13,8 @@ def bfs(graph,source = None,target = None):
     
     """
     Breadth First Search from source vertex s to target vertex t.  Returns the
-    final path.  If there is no path, list will be empty.
+    final path.  If there is no path, list will be empty.  This specific
+    method expects an adjacency matrix as input.
     
     Parameters:
     - - - - -
@@ -27,8 +28,17 @@ def bfs(graph,source = None,target = None):
     might potentially be traversed.
     """
     
-    if not source:
-        source = 0
+    try:
+        assert graph.ndim == 2
+    except:
+        err = 'Adjacency matrix must have 2 dimensions.'
+        raise ValueError(err)
+        
+    try:
+        assert graph.shape[1] > 0
+    except:
+        err = 'Dim-2 size must be greater than 0.'
+        raise ValueError(err)
 
     visited = np.zeros((graph.shape[0],)).astype(np.int32)
     parent = -1 * np.ones((graph.shape[0],)).astype(np.int32)
