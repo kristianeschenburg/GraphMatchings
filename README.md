@@ -1,6 +1,8 @@
 # Graphs
 
-Written originally with the intention to implement various graph mathching methods, but has grown into implementing various other graph algorithms and data structures.
+Written originally with the intention of implementing graph mathching methods, but has grown into a larger library of graph algorithms.
+
+In the course of my research, I regularly need to compute shortest paths on the brain surface (or in sub-graphs thereof) and apply label matching methods to match cortical regions across subjects.  While packages like networkx are highly optimized for these problems, I thought it fruitful to begin implementing these methods on my own.
 
 So far, contains classes and methods for:
 
@@ -14,6 +16,6 @@ So far, contains classes and methods for:
  
  To implement:
  
- -- **Hungarian Algorithm (Kuhn-Munkres)**: algorithm for solving the assignment problem, or the maximum-weighted matching of a graph, when the graph is bipartite
+ -- **Hungarian Algorithm (Kuhn-Munkres)**: maximum-weighted bipartite matching algorithm
  
- -- **Blossom Algorithm**: generalized version of finding the maximum-weighted matching of a graph, when the graph is not bipartite
+ -- **Blossom Algorithm**: generalized version of maximum-weighted matching of a graph, when the graph is not bipartite
