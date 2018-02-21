@@ -2,7 +2,7 @@
 
 Written originally with the intention of implementing graph mathching methods, but has grown into a larger library of graph algorithms.
 
-In the course of my research, I regularly need to compute shortest paths on the brain surface (or in sub-graphs thereof) and apply label matching methods to match cortical regions across subjects.  While packages like networkx are highly optimized for these problems, I thought it fruitful to begin implementing these methods on my own.
+In the course of my research, I regularly need to compute shortest paths on the brain surface (or in sub-graphs thereof) and apply label matching methods to match cortical regions across subjects.  While packages like **networkx** are already highly optimized for these problems, I thought it fruitful to begin implementing these methods on my own so that I can learn more about effective code optimization and general concepts in developing Python packages.
 
 So far, contains classes and methods for:
 
